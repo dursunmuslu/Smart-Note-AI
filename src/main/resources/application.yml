@@ -1,0 +1,12 @@
+spring:
+  flyway:
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5435/case_db
+    username: case_user
+    password: case_pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Flyway yönetsin
+    show-sql: true

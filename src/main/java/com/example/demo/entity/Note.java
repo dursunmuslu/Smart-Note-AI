@@ -10,12 +10,13 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "raw_text")
+    @Column(name = "raw_text", columnDefinition = "TEXT") // artık TEXT
     private String rawText;
 
+    @Column(columnDefinition = "TEXT") // artık TEXT
     private String summary;
 
-    private String status;  // String olarak tutuyoruz (NoteStatus enum yerine)
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -41,7 +42,7 @@ public class Note {
         this.updatedAt = updatedAt;
     }
 
-    // Getter ve Setter Methodları
+    // Getter ve Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -52,7 +53,7 @@ public class Note {
     public void setSummary(String summary) { this.summary = summary; }
 
     public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }  // String için doğru tanım
+    public void setStatus(String status) { this.status = status; }
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
@@ -63,10 +64,8 @@ public class Note {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    // Manuel Builder
-    public static NoteBuilder builder() {
-        return new NoteBuilder();
-    }
+    // Builder
+    public static NoteBuilder builder() { return new NoteBuilder(); }
 
     public static class NoteBuilder {
         private Long id;
@@ -90,7 +89,6 @@ public class Note {
         }
     }
 
-    // PrePersist ve PreUpdate Annotation'ları (JPA için)
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
